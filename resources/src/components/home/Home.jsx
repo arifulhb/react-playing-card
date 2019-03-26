@@ -8,6 +8,7 @@ import green from '@material-ui/core/colors/green';
 import { compose } from 'redux';
 import { Button, Paper, Grid } from '@material-ui/core';
 import axios from 'axios';
+import _ from 'lodash';
 
 
 const styles = theme => ({
@@ -48,7 +49,11 @@ const styles = theme => ({
   class Home extends Component {
 
     state = {
-        people : 4
+        people : 4,
+        error: {
+            status: false,
+            message: ''
+        }
     };
 
   componentDidMount() {
@@ -59,8 +64,17 @@ const styles = theme => ({
   handleClickGo = (e)=> {
 
       e.preventDefault();
-
       const that = this;
+
+      that.setState((state, props) => (
+        {
+            error: {
+                status: false,
+                message: ''
+            }
+        })
+     );
+
       axios.post('/api/get-cards', {
           _token: window.myToken.csrfToken,
           people: this.state.people
@@ -81,7 +95,25 @@ const styles = theme => ({
 
         })
         .catch(function (error) {
-            console.error(error);
+            // catch error message here and set via state
+            console.log(error.response.data, error.response.status);
+            if (error.response.status === 422){
+
+                let message = "";
+
+                _.each(error.response.data.errors.people, function(value, key){
+                    message += value;
+                });
+
+                that.setState((state, props) => (
+                    {
+                        error: {
+                            status: true,
+                            message: message
+                        }
+                    })
+                 );
+            }
         });
 
   }
@@ -120,6 +152,8 @@ const styles = theme => ({
                                 onChange={this.handlePlayerNumberChange}
                                 label="Add Player Number"
                                 value={this.state.people}
+                                error={this.state.error.status}
+                                helperText={this.state.error.message}
                                 id="mui-theme-provider-standard-input"
                             />
                         </MuiThemeProvider>

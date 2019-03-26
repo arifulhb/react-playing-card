@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Validator;
 
 class CardController extends Controller
 {
@@ -11,13 +12,15 @@ class CardController extends Controller
     public function index(Request $request){
 
 
-        $validatedData = $request->validate([
-            'people' => 'required|numeric|max:52',
-        ]);
+        $validatedData = Validator::make($request->all(),
+            [
+                'people' => 'required|numeric|max:52',
+            ]
+        );
 
         if ($validatedData->fails()) {
 
-            return response()->json(['errors' => $validatedData])->setStatusCode(422);
+            return response()->json(['errors' => $validatedData->getMessageBag()->toArray()])->setStatusCode(422);
         }
 
         $input = $request->all();
