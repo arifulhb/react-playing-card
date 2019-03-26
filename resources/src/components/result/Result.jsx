@@ -22,7 +22,11 @@ const styles = theme => ({
         flexWrap: 'wrap',
       },
     margin: {
-      margin: theme.spacing.unit,
+      margin: '0 0 50px 0',
+    },
+    welcome: {
+        padding: theme.spacing.unit * 2,
+        marginBottom: '30px'
     },
     chip: {
         margin: theme.spacing.unit,
@@ -94,7 +98,7 @@ const styles = theme => ({
         _.each(cards, function(value, key){
 
             chips.push(
-                <Chip
+                <Chip key={`chip-${key}`}
                     avatar={<Avatar>{value.card.short}</Avatar>}
                     label={value.page}
                     className={classes.chip}
@@ -157,6 +161,9 @@ const styles = theme => ({
                     variant='h4'>Cards are distributed
         </Typography>
 
+        {
+        this.props.history.location.state.cards.length >0 ?
+
         <div className={classes.margin}>
             <Grid container spacing={24}>
 
@@ -174,6 +181,7 @@ const styles = theme => ({
                 <Grid item xs={1}></Grid>
             </Grid>
         </div>
+        : '' }
 
         { this.renderResult(this.props.history.location.state.peoples) }
       </div>
