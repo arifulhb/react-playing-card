@@ -1,5 +1,5 @@
 # Playing Card Distribution 
-A simple playing card distribution package to distribute 52 cards from 4 diffretnt card type to `n`  number of people. 
+A simple playing card distribution package to distribute 52 cards from 4 different card type to `n`  number of people. 
 
 After distribution of card properly, show who get which cards in a predefined format.
 
