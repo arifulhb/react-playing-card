@@ -8,22 +8,23 @@ use Illuminate\Http\Request;
 class CardController extends Controller
 {
 
-    public function index(Request $requst){
+    public function index(Request $request){
 
 
-        /**
-         * Validate
-         *
-         * people must be string, required and must not be more then 53.
-         *
-         */
-        $input = $requst->all();
+        $validatedData = $request->validate([
+            'people' => 'required|numeric|max:52',
+        ]);
 
+        if ($validatedData->fails()) {
 
+            return response()->json(['errors' => $validatedData])->setStatusCode(422);
+        }
 
-        $count= explode('.', TOTAL_CARDS / $requst->input('people'));
+        $input = $request->all();
+
+        $count= explode('.', TOTAL_CARDS / $request->input('people'));
         $card_per_person = $count[0];
-        $range = range(1, $requst->input('people'));
+        $range = range(1, $request->input('people'));
         $cards = config('card.cards');
 
         $card_stack = [];
