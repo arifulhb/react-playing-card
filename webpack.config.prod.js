@@ -1,3 +1,4 @@
+// @todo WEBPACK FOR PROD IS NOT READY
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
