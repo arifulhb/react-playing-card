@@ -65,8 +65,6 @@ const styles = theme => ({
 
     renderTableBody = (rows, key) => {
 
-        console.log('pages: ', rows);
-
         let innerRows = [];
 
         {
@@ -95,7 +93,6 @@ const styles = theme => ({
 
         _.each(cards, function(value, key){
 
-            console.log('card ', value.card);
             chips.push(
                 <Chip
                     avatar={<Avatar>{value.card.short}</Avatar>}
@@ -116,13 +113,10 @@ const styles = theme => ({
 
         let that = this;
 
-        // console.log('peoples ', peoples);
         let rows = [];
 
         {
             _.each(peoples, function(value, key) {
-
-                console.log('person ', value);
 
                 rows.push(
                     <Grid item xs={3} key={`person-${key}`}>
@@ -154,7 +148,6 @@ const styles = theme => ({
 
   render() {
     const classes = this.props.classes;
-    // console.log('cards ', this.props.history.location.state.cards);
 
     return (
 

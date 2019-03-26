@@ -6,7 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import { withStyles, MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import green from '@material-ui/core/colors/green';
 import { compose } from 'redux';
-import { Button, Paper, Grid } from '@material-ui/core';
+import { Button, Paper, Grid, CircularProgress } from '@material-ui/core';
 import axios from 'axios';
 import _ from 'lodash';
 
@@ -16,6 +16,14 @@ const styles = theme => ({
       display: 'flex',
       flexWrap: 'wrap',
     },
+    buttonProgress: {
+        color: green[500],
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        marginTop: -12,
+        marginLeft: -12,
+      },
     margin: {
       margin: theme.spacing.unit,
     },
@@ -50,6 +58,7 @@ const styles = theme => ({
 
     state = {
         people : 4,
+        submit: false,
         error: {
             status: false,
             message: ''
@@ -71,7 +80,8 @@ const styles = theme => ({
             error: {
                 status: false,
                 message: ''
-            }
+            },
+            submit: true
         })
      );
 
@@ -110,7 +120,8 @@ const styles = theme => ({
                         error: {
                             status: true,
                             message: message
-                        }
+                        },
+                        submit: false
                     })
                  );
             }
@@ -133,8 +144,6 @@ const styles = theme => ({
   render() {
     const classes = this.props.classes;
     const { data } = this.props;
-
-    // console.log('classes ', classes.padding);
 
     if (!data) return 'Loading async data...';
     return (
@@ -159,10 +168,10 @@ const styles = theme => ({
                         </MuiThemeProvider>
 
                         <br/>
-                        <Button variant="contained" color="primary"
+                        <Button variant="contained" color="primary" disabled={this.state.submit}
                             onClick={this.handleClickGo}
                             className={classes.button}
-                        >Go</Button>
+                        >Go {this.state.submit === true ? <CircularProgress size={24} className={classes.buttonProgress} />: ''}</Button>
                     </div>
 
                 </Paper>
