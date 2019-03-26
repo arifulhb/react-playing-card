@@ -21,7 +21,8 @@ class CardController extends Controller
 
 
 
-        $card_per_person = round( TOTAL_CARDS / $requst->input('people'));
+        $count= explode('.', TOTAL_CARDS / $requst->input('people'));
+        $card_per_person = $count[0];
         $range = range(1, $requst->input('people'));
         $cards = config('card.cards');
 
@@ -43,14 +44,16 @@ class CardController extends Controller
                 // generate a key between 0 to last key of $card_stack;
                 $random_key = rand(0, count($card_stack) -1 );
 
-                $pick = $card_stack[$random_key];
-                array_push($card_set, $pick);
+                if(isset($card_stack[$random_key])){
+                    $pick = $card_stack[$random_key];
+                    array_push($card_set, $pick);
 
-                // remove the picked key from the stack
-                unset($card_stack[$random_key]);
+                    // remove the picked key from the stack
+                    unset($card_stack[$random_key]);
 
-                // re-indexing the array key
-                $card_stack = array_values($card_stack);
+                    // re-indexing the array key
+                    $card_stack = array_values($card_stack);
+                }
 
             }
 
@@ -59,7 +62,7 @@ class CardController extends Controller
         }
 
 
-        return response()->json(['people' => $peoples, 'cards' => $card_stack, 'per_person' => $card_per_person]);
+        return response()->json(['peoples' => $peoples, 'cards' => $card_stack, 'per_person' => $card_per_person]);
 
     }
 }

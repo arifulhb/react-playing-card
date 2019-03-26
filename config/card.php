@@ -27,19 +27,19 @@ return [
     'cards' => [
         'spade' => [
             'name' => 'Spade',
-            'shhort' => 'S',
+            'short' => 'S',
         ],
         'heart' => [
             'name' => 'Heart',
-            'shhort' => 'H',
+            'short' => 'H',
         ],
         'diamond' => [
             'name' => 'Diamond',
-            'shhort' => 'D',
+            'short' => 'D',
         ],
         'club' => [
             'name' => 'Club',
-            'shhort' => 'C',
+            'short' => 'C',
         ],
     ]
 

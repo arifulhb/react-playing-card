@@ -3,6 +3,7 @@ import { Switch, Route } from 'react-router';
 import App from '../containers/App';
 import Home from '../containers/Home';
 import About from '../containers/About';
+import Result from '../containers/Result.jsx';
 import NotFound from '../containers/NotFound';
 import { getHomeData } from '../redux/actions/home';
 import { getAboutData } from '../redux/actions/about';
@@ -21,14 +22,16 @@ export const routes = [{
   component: About,
   loadData: () => getAboutData()
 }, {
+    path: '/result',
+    exact: true,
+    component: Result
+}, {
   component: NotFound
 }];
 
 export default function Router() {
 
-    console.log('routes');
-
-  return (
+    return (
     <App>
       <Switch>
         {routes.map(route => (

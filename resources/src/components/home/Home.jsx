@@ -1,11 +1,12 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import { withStyles, MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import green from '@material-ui/core/colors/green';
 import { compose } from 'redux';
-import { Button } from '@material-ui/core';
+import { Button, Paper, Grid } from '@material-ui/core';
 import axios from 'axios';
 
 
@@ -27,6 +28,11 @@ const styles = theme => ({
     padding: {
         padding: '20px'
     },
+    paper: {
+        padding: theme.spacing.unit * 2,
+        textAlign: 'center',
+        color: theme.palette.text.secondary,
+      },
     input: {
         margin: '0 0 20px 0'
     }
@@ -45,24 +51,33 @@ const styles = theme => ({
         people : 4
     };
 
-    componentDidMount() {
+  componentDidMount() {
     // only fetch data if it does not already exist
     if (!this.props.data) this.props.getData();
   }
 
-  handleClickGo = (e)=>{
+  handleClickGo = (e)=> {
+
       e.preventDefault();
-      console.log('total: '+this.state.people);
 
-      console.log('token ', window.myToken.csrfToken);
-
+      const that = this;
       axios.post('/api/get-cards', {
           _token: window.myToken.csrfToken,
           people: this.state.people
       })
         .then(function (response) {
 
-            console.log(response);
+            if(response.status === 200){
+
+                return that.props.history.push({
+                    pathname: '/result',
+                    state: {
+                        peoples: response.data.peoples,
+                        cards: response.data.cards
+                    },
+                });
+            }
+
 
         })
         .catch(function (error) {
@@ -92,28 +107,34 @@ const styles = theme => ({
     if (!data) return 'Loading async data...';
     return (
 
-      <div className=''>
-        <Typography color="inherit" className={classes.welcome}
-                    variant='h5'>Welcome to Card Dist
-        </Typography>
-        <div>
+        <Grid container spacing={24}>
+            <Grid item xs>
+                <Paper className={classes.paper}>
+                    <Typography color="inherit" className={classes.welcome}
+                                variant='h5'>Welcome to Card Dist
+                    </Typography>
+                    <div>
 
-            <MuiThemeProvider theme={theme}>
-                <TextField className={classes.input}
-                    onChange={this.handlePlayerNumberChange}
-                    label="Add Player Number"
-                    value={this.state.people}
-                    id="mui-theme-provider-standard-input"
-                />
-            </MuiThemeProvider>
+                        <MuiThemeProvider theme={theme}>
+                            <TextField className={classes.input}
+                                onChange={this.handlePlayerNumberChange}
+                                label="Add Player Number"
+                                value={this.state.people}
+                                id="mui-theme-provider-standard-input"
+                            />
+                        </MuiThemeProvider>
 
-            <br/>
-            <Button variant="contained" color="primary"
-                onClick={this.handleClickGo}
-                className={classes.button}
-            >Go</Button>
-        </div>
-      </div>
+                        <br/>
+                        <Button variant="contained" color="primary"
+                            onClick={this.handleClickGo}
+                            className={classes.button}
+                        >Go</Button>
+                    </div>
+
+                </Paper>
+            </Grid>
+        </Grid>
+
     );
   }
 }
@@ -130,4 +151,4 @@ Home.defaultProps = {
   data: null,
 };
 
-export default compose(withStyles(styles))(Home);
+export default compose(withStyles(styles))(withRouter(Home));
