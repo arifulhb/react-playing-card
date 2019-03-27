@@ -62,6 +62,8 @@ I usually replay within 24 hours.
 
 ## Screenshots
 
-[Page 1](https://i.imgur.com/KMDJRdN.png)
+Page 1: Input Page
+![Page 1](https://i.imgur.com/KMDJRdN.png)
 
-[Result Page](https://i.imgur.com/ZvDao4S.png)
+Page 2: Result Page
+![Result Page](https://i.imgur.com/ZvDao4S.png)
