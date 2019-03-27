@@ -39,7 +39,7 @@ composer install
 Now you should be able to access the site based on your `apache` / `nginx` configuration.
 
 ## Install via Docker : Keep your enviornment clear
-![Docker](https://i.imgur.com/Kal7nwu.png | width=180)
+![Docker](https://i.imgur.com/Kal7nwu.png)
 [LempDock](https://github.com/arifulhb/lempdock) Docker Image is integrated with this project for quick start. To install via Docker, you need to have Docker install in your Windows, Mac, Linux PC/Laptop. 
 
 
