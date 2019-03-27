@@ -1,2 +1,4 @@
 #!/bin/bash
 docker exec -it -w /var/www/card lempdock_php-fpm_1 composer install
+docker exec -it -w /var/www/card lempdock_php-fpm_1 cp .env.example .env
+docker exec -it -w /var/www/card lempdock_php-fpm_1 php artisan key:generate
